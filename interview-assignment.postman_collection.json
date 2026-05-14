@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "0693a74d-7bc4-41d6-88ab-d16c9dc86975",
+		"name": "Interview Assignment",
+		"description": "Postman Collection for Fullstack Interview Assignment API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Save Place",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"placeId\": \"ChIJ5-YJ4w1zzDERA98oYxU8q9Q\",\n    \"name\": \"Kuala Lumpur\",\n    \"address\": \"Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia\",\n    \"lat\": 3.139003,\n    \"lng\": 101.686855\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/places",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"places"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Places (Pagination)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/places?page=0&size=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"places"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
