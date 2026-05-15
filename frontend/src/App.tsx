@@ -1,5 +1,5 @@
-import { useState, useCallback, useRef } from 'react';
-import { useJsApiLoader, GoogleMap, Marker, Autocomplete } from '@react-google-maps/api';
+import { useState, useCallback, useRef, useEffect } from 'react';
+import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSearch, saveFavoritePlace } from './store/placesSlice';
 import type { Place } from './store/placesSlice';
@@ -17,37 +17,80 @@ function App() {
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: API_KEY,
     libraries,
+    version: 'beta',
   });
 
   const [mapCenter, setMapCenter] = useState(defaultCenter);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
 
-  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+  // States for custom Autocomplete (New Places API)
+  const [inputValue, setInputValue] = useState('');
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [sessionToken, setSessionToken] = useState<any>(null);
 
   const dispatch = useDispatch<AppDispatch>();
   const { searches, favoriteStatus, error } = useSelector((state: RootState) => state.places);
 
-  const onLoad = useCallback((autocomplete: google.maps.places.Autocomplete) => {
-    autocompleteRef.current = autocomplete;
-  }, []);
+  // Initialize session token when API loads
+  useEffect(() => {
+    if (isLoaded) {
+      google.maps.importLibrary('places').then((placesLibrary: any) => {
+        setSessionToken(new placesLibrary.AutocompleteSessionToken());
+      });
+    }
+  }, [isLoaded]);
 
-  const onPlaceChanged = () => {
-    if (autocompleteRef.current !== null) {
-      const place = autocompleteRef.current.getPlace();
-      if (place.geometry && place.geometry.location) {
+  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+
+    if (!value || !isLoaded) {
+      setSuggestions([]);
+      return;
+    }
+
+    try {
+      const placesLibrary: any = await google.maps.importLibrary('places');
+      const request = {
+        input: value,
+        sessionToken: sessionToken,
+      };
+      const { suggestions } = await placesLibrary.AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
+      setSuggestions(suggestions || []);
+    } catch (error) {
+      console.error("Error fetching suggestions", error);
+      setSuggestions([]);
+    }
+  };
+
+  const handleSuggestionClick = async (suggestion: any) => {
+    try {
+      const place = suggestion.placePrediction.toPlace();
+      await place.fetchFields({ fields: ['id', 'displayName', 'formattedAddress', 'location'] });
+      
+      if (place.location) {
         const newPlace: Place = {
-          placeId: place.place_id || Date.now().toString(),
-          name: place.name || 'Unknown',
-          address: place.formatted_address || '',
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng()
+          placeId: place.id,
+          name: place.displayName || 'Unknown',
+          address: place.formattedAddress || '',
+          lat: place.location.lat(),
+          lng: place.location.lng()
         };
 
         setSelectedPlace(newPlace);
         setMapCenter({ lat: newPlace.lat, lng: newPlace.lng });
-
         dispatch(addSearch(newPlace));
+        
+        // Reset custom autocomplete
+        setInputValue(place.displayName || place.formattedAddress || '');
+        setSuggestions([]);
+        
+        // Renew session token
+        const placesLibrary: any = await google.maps.importLibrary('places');
+        setSessionToken(new placesLibrary.AutocompleteSessionToken());
       }
+    } catch (error) {
+      console.error("Error fetching place details", error);
     }
   };
 
@@ -69,16 +112,31 @@ function App() {
         </header>
 
         <div className="flex flex-col md:flex-row h-[600px]">
-          <div className="w-full md:w-1/3 p-6 border-r border-gray-200 overflow-y-auto">
-            <div className="mb-6">
+          <div className="w-full md:w-1/3 p-6 border-r border-gray-200 overflow-y-auto relative">
+            <div className="mb-6 relative">
               <label className="block text-sm font-medium text-gray-700 mb-2">Search Location</label>
-              <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                <input
-                  type="text"
-                  placeholder="Enter a location..."
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-                />
-              </Autocomplete>
+              <input
+                type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+                placeholder="Enter a location..."
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+              />
+              {suggestions.length > 0 && (
+                <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 shadow-lg max-h-60 overflow-y-auto">
+                  {suggestions.map((suggestion, idx) => (
+                    <li 
+                      key={idx} 
+                      className="p-3 hover:bg-gray-100 cursor-pointer border-b last:border-b-0"
+                      onClick={() => handleSuggestionClick(suggestion)}
+                    >
+                      <div className="font-medium text-gray-800">
+                        {suggestion.placePrediction.text?.text}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
 
             {selectedPlace && (
@@ -114,6 +172,7 @@ function App() {
                       onClick={() => {
                         setSelectedPlace(s);
                         setMapCenter({ lat: s.lat, lng: s.lng });
+                        setInputValue(s.name);
                       }}
                     >
                       <p className="font-medium text-gray-800">{s.name}</p>
