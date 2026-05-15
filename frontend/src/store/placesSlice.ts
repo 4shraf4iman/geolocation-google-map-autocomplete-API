@@ -15,8 +15,20 @@ interface PlacesState {
   error: string | null;
 }
 
+const loadSearchesFromCache = (): Place[] => {
+  try {
+    const saved = localStorage.getItem('searchHistory');
+    if (saved) {
+      return JSON.parse(saved);
+    }
+  } catch (e) {
+    console.error('Failed to load search history', e);
+  }
+  return [];
+};
+
 const initialState: PlacesState = {
-  searches: [],
+  searches: loadSearchesFromCache(),
   favoriteStatus: 'idle',
   error: null,
 };
@@ -39,8 +51,17 @@ export const placesSlice = createSlice({
       const exists = state.searches.find((p) => p.placeId === action.payload.placeId);
       if (!exists) {
         state.searches.push(action.payload);
+        localStorage.setItem('searchHistory', JSON.stringify(state.searches));
       }
     },
+    removeSearch: (state, action: PayloadAction<string>) => {
+      state.searches = state.searches.filter((p) => p.placeId !== action.payload);
+      localStorage.setItem('searchHistory', JSON.stringify(state.searches));
+    },
+    clearSearches: (state) => {
+      state.searches = [];
+      localStorage.removeItem('searchHistory');
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -58,6 +79,6 @@ export const placesSlice = createSlice({
   },
 });
 
-export const { addSearch } = placesSlice.actions;
+export const { addSearch, removeSearch, clearSearches } = placesSlice.actions;
 
 export default placesSlice.reducer;
