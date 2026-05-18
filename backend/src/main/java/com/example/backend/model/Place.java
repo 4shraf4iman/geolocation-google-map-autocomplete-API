@@ -28,6 +28,6 @@ public class Place {
     private Double lat;
     private Double lng;
     
-    // Optional: a field populated by a 3rd party API
+    // a field populated by a 3rd party API
     private String weatherInfo;
 }

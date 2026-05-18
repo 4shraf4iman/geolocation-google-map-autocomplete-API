@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/places")
-@CrossOrigin(origins = "http://localhost:5173") // Allow React Frontend
+@CrossOrigin(origins = "*") // Allow any React Frontend port
 @RequiredArgsConstructor
 public class PlaceController {
 
