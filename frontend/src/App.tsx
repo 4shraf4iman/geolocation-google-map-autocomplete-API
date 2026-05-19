@@ -3,7 +3,7 @@ import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveFavoritePlace, removeSearch, clearSearches, addSearch } from './store/placesSlice';
 import { Map as MapIcon } from 'lucide-react';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import type { Place } from './store/placesSlice';
 import type { RootState, AppDispatch } from './store/store';
 

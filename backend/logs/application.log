@@ -741,3 +741,42 @@ Caused by: java.lang.UnsatisfiedLinkError: Unable to load authentication DLL mss
 2026-05-15T15:31:01.408+08:00  INFO 17496 --- [backend] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2026-05-15T15:31:01.438+08:00  INFO 17496 --- [backend] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2026-05-15T15:31:01.448+08:00  INFO 17496 --- [backend] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-05-19T11:35:50.541+08:00  INFO 20340 --- [backend] [main] com.example.backend.BackendApplication   : Starting BackendApplication using Java 21.0.7 with PID 20340 (C:\laragon\www\geolocation-google-map-autocomplete-API\backend\target\classes started by mpa59 in C:\laragon\www\geolocation-google-map-autocomplete-API\backend)
+2026-05-19T11:35:50.544+08:00 DEBUG 20340 --- [backend] [main] com.example.backend.BackendApplication   : Running with Spring Boot v4.0.6, Spring v7.0.7
+2026-05-19T11:35:50.546+08:00  INFO 20340 --- [backend] [main] com.example.backend.BackendApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-05-19T11:35:51.096+08:00  INFO 20340 --- [backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-19T11:35:51.169+08:00  INFO 20340 --- [backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 62 ms. Found 1 JPA repository interface.
+2026-05-19T11:35:51.710+08:00  INFO 20340 --- [backend] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-05-19T11:35:51.725+08:00  INFO 20340 --- [backend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-19T11:35:51.726+08:00  INFO 20340 --- [backend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-05-19T11:35:51.797+08:00  INFO 20340 --- [backend] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1206 ms
+2026-05-19T11:35:52.051+08:00  INFO 20340 --- [backend] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-05-19T11:35:52.099+08:00  INFO 20340 --- [backend] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-05-19T11:35:52.654+08:00  INFO 20340 --- [backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-19T11:35:52.708+08:00  INFO 20340 --- [backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-05-19T11:35:53.237+08:00  INFO 20340 --- [backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 2692f017-8cdb-4f49-947e-d6561f4d900e
+2026-05-19T11:35:53.240+08:00  INFO 20340 --- [backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-05-19T11:35:53.426+08:00  WARN 20340 --- [backend] [main] org.hibernate.orm.deprecation            : HHH90000025: SQLServerDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-05-19T11:35:53.465+08:00  INFO 20340 --- [backend] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:sqlserver://localhost\sqlexpress:53458;concatNullYieldsNull=ON;quotedIdentifier=ON;connectRetryInterval=10;connectRetryCount=1;maxResultBuffer=-1;sendTemporalDataTypesAsStringForBulkCopy=true;delayLoadingLobs=true;useFmtOnly=false;vectorTypeSupport=v1;cacheBulkCopyMetadata=false;bulkCopyForBatchInsertAllowEncryptedValueModifications=false;bulkCopyForBatchInsertTableLock=false;bulkCopyForBatchInsertKeepNulls=false;bulkCopyForBatchInsertKeepIdentity=false;bulkCopyForBatchInsertFireTriggers=false;bulkCopyForBatchInsertCheckConstraints=false;bulkCopyForBatchInsertBatchSize=0;useBulkCopyForBatchInsert=false;cancelQueryTimeout=-1;sslProtocol=TLS;calcBigDecimalPrecision=false;useDefaultJaasConfig=false;jaasConfigurationName=SQLJDBCDriver;statementPoolingCacheSize=0;serverPreparedStatementDiscardThreshold=10;enablePrepareOnFirstPreparedStatementCall=false;fips=false;socketTimeout=0;authentication=NotSpecified;authenticationScheme=nativeAuthentication;xopenStates=false;datetimeParameterType=datetime2;sendTimeAsDatetime=true;replication=false;trustStoreType=JKS;trustServerCertificate=true;TransparentNetworkIPResolution=true;iPAddressPreference=IPv4First;serverNameAsACE=false;sendStringParametersAsUnicode=true;selectMethod=direct;responseBuffering=adaptive;queryTimeout=-1;packetSize=8000;multiSubnetFailover=false;loginTimeout=30;lockTimeout=-1;lastUpdateCount=true;useDefaultGSSCredential=false;prepareMethod=prepexec;encrypt=true;disableStatementPooling=true;databaseName=TESTDB;columnEncryptionSetting=Disabled;applicationName=Microsoft JDBC Driver for SQL Server;applicationIntent=readwrite;]
+	Database driver: Microsoft JDBC Driver 13.2 for SQL Server
+	Database dialect: SQLServerDialect
+	Database version: 16.0
+	Default catalog/schema: TESTDB/dbo
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 128
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-05-19T11:35:54.392+08:00  INFO 20340 --- [backend] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-19T11:35:55.190+08:00  INFO 20340 --- [backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-19T11:35:55.268+08:00  INFO 20340 --- [backend] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-05-19T11:35:55.544+08:00  WARN 20340 --- [backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-05-19T11:35:56.123+08:00  INFO 20340 --- [backend] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-05-19T11:35:56.136+08:00  INFO 20340 --- [backend] [main] com.example.backend.BackendApplication   : Started BackendApplication in 6.1 seconds (process running for 6.534)
+2026-05-19T11:36:53.475+08:00  INFO 20340 --- [backend] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-19T11:36:53.477+08:00  INFO 20340 --- [backend] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-19T11:36:53.482+08:00  INFO 20340 --- [backend] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-05-19T11:36:54.026+08:00  INFO 20340 --- [backend] [http-nio-8080-exec-4] c.example.backend.aspect.LoggingAspect   : REQUEST: PlaceController.savePlace() with arguments: [Place(id=null, placeId=EkhKYWxhbiBTLlAuIDMsIFRhbWFuIFNlcmkgUHV0cmEgMSwgNDcwMDAgU3VuZ2FpIEJ1bG9oLCBTZWxhbmdvciwgTWFsYXlzaWEiLiosChQKEgkhjWFI7UTMMRFKEMeCAfNtLxIUChIJK-qLaO1EzDERvcox3UTSXLk, name=Jalan S.P. 3, address=Jalan S.P. 3, Taman Seri Putra 1, 47000 Sungai Buloh, Selangor, Malaysia, lat=3.2508102, lng=101.5576577, weatherInfo=null)]
+2026-05-19T11:36:56.962+08:00  INFO 20340 --- [backend] [http-nio-8080-exec-4] c.example.backend.aspect.LoggingAspect   : RESPONSE: PlaceController.savePlace() returned: <200 OK OK,Place(id=3, placeId=EkhKYWxhbiBTLlAuIDMsIFRhbWFuIFNlcmkgUHV0cmEgMSwgNDcwMDAgU3VuZ2FpIEJ1bG9oLCBTZWxhbmdvciwgTWFsYXlzaWEiLiosChQKEgkhjWFI7UTMMRFKEMeCAfNtLxIUChIJK-qLaO1EzDERvcox3UTSXLk, name=Jalan S.P. 3, address=Jalan S.P. 3, Taman Seri Putra 1, 47000 Sungai Buloh, Selangor, Malaysia, lat=3.2508102, lng=101.5576577, weatherInfo=Current Temp: 31.1°C),[]> (Execution time: 2933 ms)

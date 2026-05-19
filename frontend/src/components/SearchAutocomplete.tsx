@@ -46,7 +46,7 @@ export function SearchAutocomplete({ isLoaded, inputValue, setInputValue, onPlac
       // Check for Google Maps Quota Error (429)
       if (error?.message?.includes('Quota exceeded') || error?.message?.includes('429')) {
         toast.error(
-          (t) => (
+          () => (
             <div className="flex flex-col gap-1">
               <span className="font-bold">Maximum Quota Reached</span>
               <span className="text-xs text-slate-300">
