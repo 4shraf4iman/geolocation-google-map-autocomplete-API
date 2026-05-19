@@ -23,7 +23,7 @@ const initialState: PlacesState = {
   error: null,
 };
 
-const API_BASE = 'http://localhost:8080/api/places';
+const API_BASE = 'https://backend-production-7dfc.up.railway.app/api/places';
 
 interface SearchHistoryParams {
   page?: number;
