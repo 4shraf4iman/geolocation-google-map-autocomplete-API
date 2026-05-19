@@ -1,9 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveFavoritePlace, removeSearch, clearSearches, addSearch } from './store/placesSlice';
+import {
+  saveFavoritePlace,
+  fetchSearchHistory,
+  deleteSearchPlace,
+  clearSearchHistory,
+  saveSearchPlace,
+} from './store/placesSlice';
 import { Map as MapIcon } from 'lucide-react';
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 import type { Place } from './store/placesSlice';
 import type { RootState, AppDispatch } from './store/store';
 
@@ -34,10 +40,14 @@ function App() {
   const dispatch = useDispatch<AppDispatch>();
   const { searches, favoriteStatus, error } = useSelector((state: RootState) => state.places);
 
+  useEffect(() => {
+    dispatch(fetchSearchHistory({ page: 0, size: 10 }));
+  }, [dispatch]);
+
   const handlePlaceSelect = (place: Place) => {
     setSelectedPlace(place);
     setMapCenter({ lat: place.lat, lng: place.lng });
-    dispatch(addSearch(place));
+    dispatch(saveSearchPlace(place));
   };
 
   const handleHistorySelect = (place: Place) => {
@@ -46,12 +56,17 @@ function App() {
     setInputValue(place.name);
   };
 
-  const handleRemoveSearch = (placeId: string) => {
-    dispatch(removeSearch(placeId));
+  const handleRemoveSearch = async (placeId: string) => {
+    try {
+      await dispatch(deleteSearchPlace(placeId)).unwrap();
+      toast.success('Removed from search history');
+    } catch (error) {
+      toast.error('Failed to remove search history item');
+    }
   };
 
   const handleClearSearches = () => {
-    dispatch(clearSearches());
+    dispatch(clearSearchHistory());
   };
 
   const handleFavorite = () => {
@@ -143,10 +158,6 @@ function App() {
             disableDefaultUI: true,
             zoomControl: true,
             mapId: "DEMO_MAP_ID", // Adds modern map styling if configured
-            styles: [ // Clean, minimal map style fallback
-              { featureType: "poi", stylers: [{ visibility: "off" }] },
-              { featureType: "transit", stylers: [{ visibility: "off" }] }
-            ]
           }}
         >
           {selectedPlace && (

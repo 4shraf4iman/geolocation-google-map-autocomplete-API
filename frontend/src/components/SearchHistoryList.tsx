@@ -33,9 +33,9 @@ export function SearchHistoryList({ searches, onHistorySelect, onRemoveSearch, o
         </div>
       ) : (
         <ul className="space-y-2">
-          {searches.map((s, idx) => (
+          {searches.map((s) => (
             <li 
-              key={idx} 
+              key={s.placeId} 
               className="group p-3 bg-white hover:bg-indigo-50 border border-slate-100 rounded-xl cursor-pointer transition-all duration-200 shadow-sm hover:shadow relative overflow-hidden"
               onClick={() => onHistorySelect(s)}
             >
